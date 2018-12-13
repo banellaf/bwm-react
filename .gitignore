@@ -22,3 +22,5 @@ yarn-error.log*
 
 /src/**/*.css
 /src/**/*.scss
+
+/server/config/dev.js
