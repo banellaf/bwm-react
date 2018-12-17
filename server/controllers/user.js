@@ -4,9 +4,9 @@ const jwt = require ('jsonwebtoken');
 const config = require ('../config/dev');
 
 exports.auth = function(req, res) {
-    const {email, password  } = req.body;
+    const { email, password } = req.body;
 
-    if ( !password || !email){
+    if (!password || !email) {
         return res.status(422).send({errors: [{title : 'Data missing', detail:'Please provide email and password'}]});
     }
 
@@ -16,7 +16,7 @@ exports.auth = function(req, res) {
         }
 
         if (!user){
-            return res.status(422).send({errors: [{title : 'Invalid User!', detail:'User does not exists'}]});
+            return res.status(422).send({errors: [{title : 'Invalid User!', detail:'User not found'}]});
         }
 
         if (user.hasSamePassword(password)){
