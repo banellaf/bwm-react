@@ -9,7 +9,7 @@ const userRoutes = require('./routes/users');
 
 mongoose.connect(config.DB_URI).then(() => {
     const fakeDb = new FakeDb();
-    fakeDb.seedDb();
+    //fakeDb.seedDb();
 });
 
 const app = express();
@@ -29,6 +29,6 @@ app.use('/api/v1/users', userRoutes);
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, function () {
-    console.log('I am running');
+    console.log('Server started');
 });
 
