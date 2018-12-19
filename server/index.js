@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const config = require('./config/dev');
 const FakeDb = require('./fake-db');
 
-const rentalRoutes = require('./routes/rentals')
+const rentalRoutes = require('./routes/rentals');
 const userRoutes = require('./routes/users');
+const bookingRoutes = require('./routes/bookings');
 
 mongoose.connect(config.DB_URI).then(() => {
     const fakeDb = new FakeDb();
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 
 app.use('/api/v1/rentals', rentalRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/bookings', bookingRoutes);
 
 /*app.get('/rentals/:id', function(req, res) {
     const id = req.params.id;
