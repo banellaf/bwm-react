@@ -122,7 +122,7 @@ reserveRental() {
             this.addNewBookedOutDates(booking);
             this.cancelConfirmation();
             this.resetData();
-            toast.success('Booking has been successfully create!');
+            toast.success('Booking has been successfully created!');
         },
         (errors) => {
             this.setState({errors})
