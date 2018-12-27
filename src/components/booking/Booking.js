@@ -84,7 +84,6 @@ cancelConfirmation() {
 }
 
 addNewBookedOutDates(booking){
-    debugger;
     const dateRange = getRangeOfDates(booking.startAt, booking.endAt);
     this.bookedOutDates.push(...dateRange);
 }
@@ -126,7 +125,6 @@ reserveRental() {
         },
         (errors) => {
             this.setState({errors})
-            debugger;
         });
 }
 
