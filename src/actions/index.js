@@ -29,11 +29,30 @@ const fetchRentalsSuccess = (rentals) => {
     }
 }
 
-export const fetchRentals = () => {
+const fetchRentalsInit = () => {
+    return {
+        type:types.FETCH_RENTALS_INIT
+    }
+}
+
+const fetchRentalsFail = (errors) => {
+    return {
+        type:types.FETCH_RENTALS_FAIL,
+        errors
+    }
+}
+
+export const fetchRentals = (city) => {
+    const url = city ? `/rentals?city=${city}` : '/rentals';
+
     return dispatch => {
-        axiosIntance.get(`/rentals/`)
+        dispatch(fetchRentalsInit());
+        axiosIntance.get(url)
         .then(res => res.data )
-        .then (rentals => dispatch(fetchRentalsSuccess(rentals)));
+        .then (rentals => dispatch(fetchRentalsSuccess(rentals)))
+        .catch(({response}) => {
+            dispatch(fetchRentalsFail(response.data.errors));
+        });
     }
 }
 
@@ -47,12 +66,21 @@ export const fetchRentalById = (rentalId) => {
     }
 }
 
+export const createRental = (rentalData) => {
+    return axiosIntance.post('/rentals', rentalData)
+          .then( res => res.data,
+                 err => Promise.reject(err.response.data.errors));
+}
+
 //////////////////
 // AUTH ACTIONS //
 //////////////////
 const loginSuccess = () => {
+    const username = authService.getUsername();
     return {
-        type:types.LOGIN_SUCCESS
+        type:types.LOGIN_SUCCESS,
+        username
+
     }
 }
 
@@ -64,9 +92,9 @@ const loginFailure = (errors) => {
 }
 
 export const register = (userData) => {
-    return axios.post('/api/v1/users/register', userData).then(
-        res => res.data,
-        err => Promise.reject(err.response.data.errors));
+    return axios.post('/api/v1/users/register', userData)
+          .then( res => res.data,
+                 err => Promise.reject(err.response.data.errors));
 }
 
 export const checkAuthState = () => {

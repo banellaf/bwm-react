@@ -43,7 +43,7 @@ router.post('', UserCtrl.authMiddleware, function(req, res){
 router.get('', function(req, res){
     const city = req.query.city;
     const query = city ? {city:city.toLowerCase()} : {};
-
+debugger;
     Rental.find(query)
     .select('-bookings')
     .exec( function(err, foundRentals){
@@ -51,9 +51,10 @@ router.get('', function(req, res){
                 return res.status(422).send({errors: normalizeErrors(err.errors)}); 
             }
             if (city && foundRentals.length === 0){
-                res.status(422).send ({errors: [{title : 'No Rental found', detail:`There are no rentals for city : ${city}`}]});
+                return res.status(422).send ({errors: [{title : 'No Rental found', detail:`There are no rentals for city : ${city}`}]});
             }
-            return  res.json(foundRentals);
+            console.log(foundRentals);
+            return res.json(foundRentals);
     });
 });
 
